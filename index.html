@@ -24,11 +24,11 @@
 
     .container{
       width:100%;
-      max-width:var(--maxw);
-      display:grid;
-      grid-template-columns: 380px 1fr;
+      max-width:800px;
+      display:flex;
+      flex-direction:column;
       gap:20px;
-      align-items:start;
+      align-items:stretch;
     }
 
     /* Form panel */
@@ -60,22 +60,40 @@
 
     .photos{
       display:flex;
-      gap:8px;
+      gap:12px;
       flex-wrap:wrap;
-      margin-top:8px;
+      margin-top:12px;
     }
     .photo-preview{
-      width:100px; height:120px;
-      border-radius:6px;
+      width:100px;
+      height:120px;
+      border-radius:8px;
       background:#f4f7f7;
-      border:1px dashed #cfe6e4;
+      border:2px solid #ffffff;
       display:flex;
       align-items:center;
       justify-content:center;
       overflow:hidden;
       position:relative;
+      box-shadow:
+        0 2px 4px rgba(0,0,0,0.08),
+        0 4px 8px rgba(0,0,0,0.06),
+        inset 0 0 0 1px rgba(11,107,143,0.15);
+      transition: all 0.2s ease;
     }
-    .photo-preview img{ width:100%; height:100%; object-fit:cover; display:block; }
+    .photo-preview:hover {
+      transform: translateY(-2px);
+      box-shadow:
+        0 4px 8px rgba(0,0,0,0.12),
+        0 6px 12px rgba(0,0,0,0.08),
+        inset 0 0 0 1px rgba(11,107,143,0.25);
+    }
+    .photo-preview img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
 
     .btn {
       display:inline-block;
@@ -118,39 +136,114 @@
     .paper h1{ margin:4px 0; color:#0c5160; font-size:26px; letter-spacing:0.5px; }
     .section-title{ color:#0b5a68; font-weight:700; margin-top:8px; margin-bottom:8px; font-size:14px; border-bottom:3px solid #cfe6e4; display:inline-block; padding-bottom:4px; }
     .two-columns {
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:12px;
+      display:block;
     }
     .field-row{ display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid rgba(10,40,45,0.03); }
     .field-row .label{ color:#2b5b62; width:45%; }
     .field-row .value{ color:#143a3e; width:50%; text-align:right; }
 
     .family, .contact { margin-top:12px; }
+
+    .photo-section {
+      margin-top:20px;
+      padding:20px;
+      background: linear-gradient(145deg, rgba(207,230,228,0.1), rgba(234,248,246,0.2));
+      border-radius:12px;
+      border:1px solid rgba(207,230,228,0.3);
+    }
+
     .big-photos{
       display:flex;
-      gap:12px;
-      margin-top:12px;
-      justify-content:center;
+      flex-direction:column;
+      gap:20px;
+      margin-top:20px;
+      align-items:center;
     }
-    .big-photos .big{ width:180px; height:220px; border-radius:4px; overflow:hidden; background:#fff; border:1px solid #d6ecea; }
-    .big img{ width:100%; height:100%; object-fit:cover; }
+    .big-photos .big{
+      width:200px;
+      height:240px;
+      border-radius:12px;
+      overflow:hidden;
+      background:#fff;
+      border:3px solid #ffffff;
+      box-shadow:
+        0 4px 6px rgba(0,0,0,0.1),
+        0 8px 16px rgba(0,0,0,0.08),
+        0 12px 24px rgba(0,0,0,0.06),
+        inset 0 0 0 1px rgba(11,107,143,0.2);
+      transform: perspective(1000px) rotateX(2deg);
+      transition: all 0.3s ease;
+      position: relative;
+      animation: fadeInUp 0.5s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: perspective(1000px) rotateX(2deg) translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: perspective(1000px) rotateX(2deg) translateY(0);
+      }
+    }
+    .big-photos .big:hover {
+      transform: perspective(1000px) rotateX(0deg) scale(1.02);
+      box-shadow:
+        0 6px 12px rgba(0,0,0,0.15),
+        0 12px 24px rgba(0,0,0,0.12),
+        0 16px 32px rgba(0,0,0,0.1),
+        inset 0 0 0 2px rgba(11,107,143,0.3);
+    }
+    .big-photos .big::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg,
+        rgba(255,255,255,0.3) 0%,
+        transparent 20%,
+        transparent 80%,
+        rgba(0,0,0,0.05) 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+    .big img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
 
     /* print */
     @media print {
       body { background:white; margin:0; padding:0; }
-      .container{ grid-template-columns:1fr; padding:0; }
+      .container{ padding:0; }
       .form-card{ display:none; }
       .preview{ box-shadow:none; padding:0; }
       .paper{ box-shadow:none; margin:0; border-radius:0; padding:20px; }
       .btn { display:none; }
+      .big-photos .big {
+        transform: none !important;
+        box-shadow: 0 0 0 1px #ccc !important;
+        animation: none !important;
+        border: 1px solid #ddd !important;
+      }
+      .big-photos .big::before {
+        display: none !important;
+      }
+      .photo-section {
+        background: none !important;
+        border: none !important;
+        padding: 10px !important;
+      }
     }
 
     /* responsive */
     @media (max-width:950px){
-      .container{ grid-template-columns:1fr; padding:8px; }
-      .form-card{ order:2; }
-      .preview{ order:1; }
+      .container{ padding:8px; }
     }
   </style>
 </head>
@@ -162,7 +255,7 @@
 
       <div class="group">
         <label>Full Name</label>
-        <input type="text" id="name" placeholder="e.g. Dogiparthi Guru Mahesh" />
+        <input type="text" id="name" placeholder="Enter your full name" />
       </div>
 
       <div class="two-col">
@@ -172,47 +265,47 @@
         </div>
         <div class="group">
           <label>Place of birth</label>
-          <input type="text" id="pob" placeholder="Place of Birth" />
+          <input type="text" id="pob" placeholder="Enter place of birth" />
         </div>
       </div>
 
       <div class="two-col">
         <div class="group">
           <label>Complexion</label>
-          <input type="text" id="complexion" placeholder="Fair" />
+          <input type="text" id="complexion" placeholder="Enter complexion" />
         </div>
         <div class="group">
           <label>Height (e.g. 5.7)</label>
-          <input type="text" id="height" placeholder="Height" />
+          <input type="text" id="height" placeholder="Enter height (e.g., 5.7)" />
         </div>
       </div>
 
       <div class="group">
         <label>Gotra / Maternal Gothra</label>
-        <input type="text" id="gotra" placeholder="Gotra" />
+        <input type="text" id="gotra" placeholder="Enter your gotra" />
       </div>
 
       <div class="group">
         <label>Education</label>
-        <input type="text" id="education" placeholder="MBA" />
+        <input type="text" id="education" placeholder="Enter your education" />
       </div>
 
       <div class="two-col">
         <div class="group">
           <label>Religion</label>
-          <input type="text" id="religion" placeholder="Hindu" />
+          <input type="text" id="religion" placeholder="Enter your religion" />
         </div>
         <div class="group">
           <label>Caste</label>
-          <input type="text" id="caste" placeholder="Caste" />
+          <input type="text" id="caste" placeholder="Enter your caste" />
         </div>
       </div>
 
       <div class="group">
         <label>Company / Job / Designation / Package</label>
-        <input type="text" id="company" placeholder="Company" />
-        <input style="margin-top:8px" type="text" id="designation" placeholder="Job / Designation" />
-        <input style="margin-top:8px" type="text" id="package" placeholder="e.g. 16.5LPA" />
+        <input type="text" id="company" placeholder="Enter your company name" />
+        <input style="margin-top:8px" type="text" id="designation" placeholder="Enter your job/designation" />
+        <input style="margin-top:8px" type="text" id="package" placeholder="Enter your package (e.g., 16.5LPA)" />
       </div>
 
       <hr />
@@ -221,23 +314,23 @@
 
       <div class="group">
         <label>Father's name</label>
-        <input type="text" id="father" />
+        <input type="text" id="father" placeholder="Enter father's name" />
       </div>
       <div class="group">
         <label>Father's occupation</label>
-        <input type="text" id="fatherOcc" />
+        <input type="text" id="fatherOcc" placeholder="Enter father's occupation" />
       </div>
       <div class="group">
         <label>Mother's name</label>
-        <input type="text" id="mother" />
+        <input type="text" id="mother" placeholder="Enter mother's name" />
       </div>
       <div class="group">
         <label>Mother's occupation</label>
-        <input type="text" id="motherOcc" />
+        <input type="text" id="motherOcc" placeholder="Enter mother's occupation" />
       </div>
       <div class="group">
         <label>Siblings (notes)</label>
-        <textarea id="siblings" placeholder="e.g. Two brothers. Brother1: name & occupation; Brother2: ..."></textarea>
+        <textarea id="siblings" placeholder="Enter details about siblings (e.g., number, names, occupations)"></textarea>
       </div>
 
       <hr />
@@ -245,11 +338,11 @@
 
       <div class="group">
         <label>Father's contact number</label>
-        <input type="tel" id="phone" />
+        <input type="tel" id="phone" placeholder="Enter contact number" />
       </div>
       <div class="group">
         <label>Address</label>
-        <textarea id="address" placeholder="Full address"></textarea>
+        <textarea id="address" placeholder="Enter your full address"></textarea>
       </div>
 
       <hr />
@@ -311,8 +404,11 @@
           </div>
         </div>
 
-        <div class="big-photos" id="bigPhotos">
-          <!-- inserted images -->
+        <div class="photo-section">
+          <div class="section-title" style="text-align:center; margin-top:20px;">PHOTOGRAPHS</div>
+          <div class="big-photos" id="bigPhotos">
+            <!-- inserted images -->
+          </div>
         </div>
 
         <div style="text-align:center; margin-top:18px; color:#0b6b6b; font-weight:600;">www.myperfectbiodata.com</div>
@@ -321,133 +417,185 @@
   </div>
 
   <script>
-    // helper to set text
-    function setText(id, text){
-      document.getElementById(id).textContent = text || "-";
-    }
+    // Wrap everything in an IIFE to prevent variable redeclaration errors
+    (function() {
+      // helper to set text
+      function setText(id, text){
+        document.getElementById(id).textContent = text || "-";
+      }
 
-    // photo handling
-    const photoInput = document.getElementById("photoInput");
-    const photoList = document.getElementById("photoList");
-    const bigPhotos = document.getElementById("bigPhotos");
-    let photoFiles = [];
+      // photo handling
+      const photoInput = document.getElementById("photoInput");
+      const photoList = document.getElementById("photoList");
+      const bigPhotos = document.getElementById("bigPhotos");
+      let photoFiles = [];
 
-    photoInput.addEventListener("change", (e) => {
-      photoFiles = Array.from(e.target.files).slice(0,3); // limit to 3
-      renderPhotoThumbs();
-    });
-
-    function renderPhotoThumbs(){
-      photoList.innerHTML = "";
-      photoFiles.forEach((file, idx) => {
-        const reader = new FileReader();
-        const box = document.createElement("div");
-        box.className = "photo-preview";
-        photoList.appendChild(box);
-
-        reader.onload = function(ev){
-          const img = document.createElement("img");
-          img.src = ev.target.result;
-          box.innerHTML = "";
-          box.appendChild(img);
-
-          // add small remove button
-          const btn = document.createElement("button");
-          btn.textContent = "Remove";
-          btn.style.position="absolute";
-          btn.style.bottom="6px";
-          btn.style.left="6px";
-          btn.style.fontSize="12px";
-          btn.className="small";
-          btn.onclick = () => {
-            photoFiles.splice(idx,1);
-            renderPhotoThumbs();
-          };
-          box.appendChild(btn);
-        };
-        reader.readAsDataURL(file);
+      photoInput.addEventListener("change", (e) => {
+        photoFiles = Array.from(e.target.files).slice(0,3); // limit to 3
+        renderPhotoThumbs();
       });
-    }
 
-    // apply to preview
-    document.getElementById("applyBtn").addEventListener("click", () => {
-      setText("p_name", document.getElementById("name").value);
-      const dob = document.getElementById("dob").value;
-      setText("p_dob", dob ? (new Date(dob)).toLocaleDateString() : "-");
-      setText("p_pob", document.getElementById("pob").value);
-      setText("p_complexion", document.getElementById("complexion").value);
-      setText("p_height", document.getElementById("height").value);
-      const gotra = document.getElementById("gotra").value;
-      setText("p_gotra", gotra);
-      setText("p_education", document.getElementById("education").value);
-      setText("p_religion", document.getElementById("religion").value);
-      setText("p_caste", document.getElementById("caste").value);
-      setText("p_company", document.getElementById("company").value);
-      setText("p_designation", document.getElementById("designation").value);
-      setText("p_package", document.getElementById("package").value);
-
-      setText("p_father", document.getElementById("father").value);
-      setText("p_fatherOcc", document.getElementById("fatherOcc").value);
-      setText("p_mother", document.getElementById("mother").value);
-      setText("p_motherOcc", document.getElementById("motherOcc").value);
-      setText("p_siblings", document.getElementById("siblings").value);
-
-      setText("p_phone", document.getElementById("phone").value);
-      setText("p_address", document.getElementById("address").value);
-
-      // render big photos
-      bigPhotos.innerHTML = "";
-      if(photoFiles.length === 0){
-        // empty placeholder single photo
-        const ph = document.createElement("div");
-        ph.className = "big";
-        ph.style.display="flex";
-        ph.style.alignItems="center";
-        ph.style.justifyContent="center";
-        ph.style.color="#7da7a6";
-        ph.textContent = "No photo uploaded";
-        bigPhotos.appendChild(ph);
-      } else {
-        photoFiles.forEach((file) => {
+      function renderPhotoThumbs(){
+        photoList.innerHTML = "";
+        photoFiles.forEach((file, idx) => {
           const reader = new FileReader();
+          const box = document.createElement("div");
+          box.className = "photo-preview";
+          photoList.appendChild(box);
+
           reader.onload = function(ev){
-            const div = document.createElement("div");
-            div.className = "big";
             const img = document.createElement("img");
             img.src = ev.target.result;
-            div.appendChild(img);
-            bigPhotos.appendChild(div);
+            box.innerHTML = "";
+            box.appendChild(img);
+
+            // add small remove button
+            const btn = document.createElement("button");
+            btn.textContent = "×";
+            btn.style.position="absolute";
+            btn.style.top="5px";
+            btn.style.right="5px";
+            btn.style.fontSize="18px";
+            btn.style.width="24px";
+            btn.style.height="24px";
+            btn.style.borderRadius="50%";
+            btn.style.background="rgba(255,255,255,0.95)";
+            btn.style.border="1px solid rgba(220,53,69,0.3)";
+            btn.style.color="#dc3545";
+            btn.style.cursor="pointer";
+            btn.style.padding="0";
+            btn.style.display="flex";
+            btn.style.alignItems="center";
+            btn.style.justifyContent="center";
+            btn.style.boxShadow="0 2px 4px rgba(0,0,0,0.2)";
+            btn.style.zIndex="2";
+            btn.title="Remove photo";
+            btn.onclick = () => {
+              photoFiles.splice(idx,1);
+              renderPhotoThumbs();
+            };
+            box.appendChild(btn);
           };
           reader.readAsDataURL(file);
         });
       }
 
-      // scroll preview into view on small screens
-      document.querySelector(".preview").scrollIntoView({behavior:"smooth"});
-    });
+      // apply to preview
+      const applyButton = document.getElementById("applyBtn");
+      if (!applyButton) {
+        console.error("Apply button not found!");
+      } else {
+        console.log("Apply button found, adding event listener");
+        applyButton.addEventListener("click", () => {
+          console.log("Apply button clicked!");
+          setText("p_name", document.getElementById("name").value);
+          const dob = document.getElementById("dob").value;
+          setText("p_dob", dob ? (new Date(dob)).toLocaleDateString() : "-");
+          setText("p_pob", document.getElementById("pob").value);
+          setText("p_complexion", document.getElementById("complexion").value);
+          setText("p_height", document.getElementById("height").value);
+          const gotra = document.getElementById("gotra").value;
+          setText("p_gotra", gotra);
+          setText("p_education", document.getElementById("education").value);
+          setText("p_religion", document.getElementById("religion").value);
+          setText("p_caste", document.getElementById("caste").value);
+          setText("p_company", document.getElementById("company").value);
+          setText("p_designation", document.getElementById("designation").value);
+          setText("p_package", document.getElementById("package").value);
 
-    // print button
-    document.getElementById("printBtn").addEventListener("click", ()=> window.print());
+          setText("p_father", document.getElementById("father").value);
+          setText("p_fatherOcc", document.getElementById("fatherOcc").value);
+          setText("p_mother", document.getElementById("mother").value);
+          setText("p_motherOcc", document.getElementById("motherOcc").value);
+          setText("p_siblings", document.getElementById("siblings").value);
 
-    // reset
-    document.getElementById("resetBtn").addEventListener("click", ()=>{
-      if(confirm("Clear form?")){
-        document.querySelectorAll("input[type=text], input[type=date], input[type=tel], textarea").forEach(i=>i.value="");
-        photoFiles = [];
-        photoInput.value = "";
-        renderPhotoThumbs();
-        // clear preview fields
-        const ids = ["p_name","p_dob","p_pob","p_complexion","p_height","p_gotra","p_education","p_religion","p_caste","p_company","p_designation","p_package","p_father","p_fatherOcc","p_mother","p_motherOcc","p_siblings","p_phone","p_address"];
-        ids.forEach(id=>setText(id,"-"));
-        bigPhotos.innerHTML = "";
+          setText("p_phone", document.getElementById("phone").value);
+          setText("p_address", document.getElementById("address").value);
+
+          // render big photos
+          bigPhotos.innerHTML = "";
+          if(photoFiles.length === 0){
+            // empty placeholder single photo
+            const ph = document.createElement("div");
+            ph.className = "big";
+            ph.style.display="flex";
+            ph.style.flexDirection="column";
+            ph.style.alignItems="center";
+            ph.style.justifyContent="center";
+            ph.style.color="#7da7a6";
+            ph.style.background="linear-gradient(135deg, #f5f9f9, #eaf5f4)";
+            ph.innerHTML = `
+              <div style="font-size:40px; margin-bottom:10px; opacity:0.5;">📷</div>
+              <div style="font-size:14px; font-weight:500;">No photo uploaded</div>
+              <div style="font-size:12px; opacity:0.7; margin-top:5px;">Please upload photos</div>
+            `;
+            bigPhotos.appendChild(ph);
+          } else {
+            photoFiles.forEach((file) => {
+              const reader = new FileReader();
+              reader.onload = function(ev){
+                const div = document.createElement("div");
+                div.className = "big";
+                const img = document.createElement("img");
+                img.src = ev.target.result;
+                div.appendChild(img);
+                bigPhotos.appendChild(div);
+              };
+              reader.readAsDataURL(file);
+            });
+          }
+
+          // scroll preview into view on small screens
+          document.querySelector(".preview").scrollIntoView({behavior:"smooth"});
+        });
       }
-    });
 
-    // initialize small placeholders
-    (function init(){
-      setText("p_name","-");
-      bigPhotos.innerHTML = '<div class="big" style="display:flex;align-items:center;justify-content:center;color:#7da7a6">Upload photos to preview</div>';
-    }());
+      // print button
+      const printButton = document.getElementById("printBtn");
+      if (!printButton) {
+        console.error("Print button not found!");
+      } else {
+        console.log("Print button found, adding event listener");
+        printButton.addEventListener("click", () => {
+          console.log("Print button clicked!");
+          window.print();
+        });
+      }
+
+      // reset button
+      const resetButton = document.getElementById("resetBtn");
+      if (!resetButton) {
+        console.error("Reset button not found!");
+      } else {
+        console.log("Reset button found, adding event listener");
+        resetButton.addEventListener("click", () => {
+          console.log("Reset button clicked!");
+          if(confirm("Clear form?")){
+            document.querySelectorAll("input[type=text], input[type=date], input[type=tel], textarea").forEach(i=>i.value="");
+            photoFiles = [];
+            photoInput.value = "";
+            renderPhotoThumbs();
+            // clear preview fields
+            const ids = ["p_name","p_dob","p_pob","p_complexion","p_height","p_gotra","p_education","p_religion","p_caste","p_company","p_designation","p_package","p_father","p_fatherOcc","p_mother","p_motherOcc","p_siblings","p_phone","p_address"];
+            ids.forEach(id=>setText(id,"-"));
+            bigPhotos.innerHTML = "";
+          }
+        });
+      }
+
+      // initialize small placeholders
+      (function init(){
+        setText("p_name","-");
+        bigPhotos.innerHTML = `
+          <div class="big" style="display:flex; flex-direction:column; align-items:center; justify-content:center; color:#7da7a6; background:linear-gradient(135deg, #f5f9f9, #eaf5f4);">
+            <div style="font-size:40px; margin-bottom:10px; opacity:0.5;">📷</div>
+            <div style="font-size:14px; font-weight:500;">Upload photos to preview</div>
+            <div style="font-size:12px; opacity:0.7; margin-top:5px;">Up to 3 photos allowed</div>
+          </div>
+        `;
+      }());
+
+    })(); // End of main IIFE wrapper
   </script>
 </body>
 </html>
