@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Biodata Template (fillable)</title>
+  <style>
+    :root{
+      --bg:#e9f7f6;
+      --panel:#ffffff;
+      --accent:#0b6b8f;
+      --muted:#666;
+      --pad:16px;
+      --maxw:1000px;
+    }
+    body{
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      background: linear-gradient(#f6fbfb, #eef9f8);
+      margin:0;
+      padding:24px;
+      display:flex;
+      justify-content:center;
+    }
+
+    .container{
+      width:100%;
+      max-width:var(--maxw);
+      display:grid;
+      grid-template-columns: 380px 1fr;
+      gap:20px;
+      align-items:start;
+    }
+
+    /* Form panel */
+    .form-card{
+      background:var(--panel);
+      padding:var(--pad);
+      border-radius:10px;
+      box-shadow:0 6px 18px rgba(16,24,40,0.08);
+    }
+    .form-card h2{ margin:0 0 12px 0; color:var(--accent) }
+    .group{ margin-bottom:12px; }
+    .group label{ display:block; font-size:13px; color:var(--muted); margin-bottom:6px; }
+    .group input[type="text"],
+    .group input[type="date"],
+    .group input[type="tel"],
+    .group select,
+    .group textarea{
+      width:100%;
+      padding:8px 10px;
+      border:1px solid #dbe7e5;
+      border-radius:6px;
+      font-size:14px;
+      box-sizing:border-box;
+      background:#fff;
+    }
+    textarea{ min-height:70px; resize:vertical; }
+
+    .two-col{ display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+
+    .photos{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-top:8px;
+    }
+    .photo-preview{
+      width:100px; height:120px;
+      border-radius:6px;
+      background:#f4f7f7;
+      border:1px dashed #cfe6e4;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+      position:relative;
+    }
+    .photo-preview img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+    .btn {
+      display:inline-block;
+      padding:8px 12px;
+      border-radius:6px;
+      background:var(--accent);
+      color:#fff;
+      text-decoration:none;
+      border:none;
+      cursor:pointer;
+      font-size:14px;
+    }
+    .btn.secondary{ background:#6aa5b6; }
+    .small { font-size:13px; padding:6px 8px; }
+
+    /* Preview panel (print layout) */
+    .preview{
+      background: var(--bg);
+      border-radius:10px;
+      padding:24px;
+      box-shadow:0 6px 18px rgba(16,24,40,0.06);
+      position:relative;
+      min-height:640px;
+    }
+    .paper{
+      width:100%;
+      max-width:700px;
+      margin:0 auto;
+      background: #eaf8f6;
+      border-radius:4px;
+      padding:28px 36px;
+      box-sizing:border-box;
+      position:relative;
+      color:#123b45;
+    }
+    .paper .header{
+      text-align:center;
+      margin-bottom:18px;
+    }
+    .paper h1{ margin:4px 0; color:#0c5160; font-size:26px; letter-spacing:0.5px; }
+    .section-title{ color:#0b5a68; font-weight:700; margin-top:8px; margin-bottom:8px; font-size:14px; border-bottom:3px solid #cfe6e4; display:inline-block; padding-bottom:4px; }
+    .two-columns {
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+    }
+    .field-row{ display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid rgba(10,40,45,0.03); }
+    .field-row .label{ color:#2b5b62; width:45%; }
+    .field-row .value{ color:#143a3e; width:50%; text-align:right; }
+
+    .family, .contact { margin-top:12px; }
+    .big-photos{
+      display:flex;
+      gap:12px;
+      margin-top:12px;
+      justify-content:center;
+    }
+    .big-photos .big{ width:180px; height:220px; border-radius:4px; overflow:hidden; background:#fff; border:1px solid #d6ecea; }
+    .big img{ width:100%; height:100%; object-fit:cover; }
+
+    /* print */
+    @media print {
+      body { background:white; margin:0; padding:0; }
+      .container{ grid-template-columns:1fr; padding:0; }
+      .form-card{ display:none; }
+      .preview{ box-shadow:none; padding:0; }
+      .paper{ box-shadow:none; margin:0; border-radius:0; padding:20px; }
+      .btn { display:none; }
+    }
+
+    /* responsive */
+    @media (max-width:950px){
+      .container{ grid-template-columns:1fr; padding:8px; }
+      .form-card{ order:2; }
+      .preview{ order:1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Form -->
+    <div class="form-card" aria-label="Biodata form">
+      <h2>Fill Biodata</h2>
+
+      <div class="group">
+        <label>Full Name</label>
+        <input type="text" id="name" placeholder="e.g. Dogiparthi Guru Mahesh" />
+      </div>
+
+      <div class="two-col">
+        <div class="group">
+          <label>Date of birth</label>
+          <input type="date" id="dob" />
+        </div>
+        <div class="group">
+          <label>Place of birth</label>
+          <input type="text" id="pob" placeholder="Place of Birth" />
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="group">
+          <label>Complexion</label>
+          <input type="text" id="complexion" placeholder="Fair" />
+        </div>
+        <div class="group">
+          <label>Height (e.g. 5.7)</label>
+          <input type="text" id="height" placeholder="Height" />
+        </div>
+      </div>
+
+      <div class="group">
+        <label>Gotra / Maternal Gothra</label>
+        <input type="text" id="gotra" placeholder="Gotra" />
+      </div>
+
+      <div class="group">
+        <label>Education</label>
+        <input type="text" id="education" placeholder="MBA" />
+      </div>
+
+      <div class="two-col">
+        <div class="group">
+          <label>Religion</label>
+          <input type="text" id="religion" placeholder="Hindu" />
+        </div>
+        <div class="group">
+          <label>Caste</label>
+          <input type="text" id="caste" placeholder="Caste" />
+        </div>
+      </div>
+
+      <div class="group">
+        <label>Company / Job / Designation / Package</label>
+        <input type="text" id="company" placeholder="Company" />
+        <input style="margin-top:8px" type="text" id="designation" placeholder="Job / Designation" />
+        <input style="margin-top:8px" type="text" id="package" placeholder="e.g. 16.5LPA" />
+      </div>
+
+      <hr />
+
+      <h3 style="margin:6px 0 10px 0;color:var(--accent)">Family details</h3>
+
+      <div class="group">
+        <label>Father's name</label>
+        <input type="text" id="father" />
+      </div>
+      <div class="group">
+        <label>Father's occupation</label>
+        <input type="text" id="fatherOcc" />
+      </div>
+      <div class="group">
+        <label>Mother's name</label>
+        <input type="text" id="mother" />
+      </div>
+      <div class="group">
+        <label>Mother's occupation</label>
+        <input type="text" id="motherOcc" />
+      </div>
+      <div class="group">
+        <label>Siblings (notes)</label>
+        <textarea id="siblings" placeholder="e.g. Two brothers. Brother1: name & occupation; Brother2: ..."></textarea>
+      </div>
+
+      <hr />
+      <h3 style="margin:6px 0 10px 0;color:var(--accent)">Contact</h3>
+
+      <div class="group">
+        <label>Father's contact number</label>
+        <input type="tel" id="phone" />
+      </div>
+      <div class="group">
+        <label>Address</label>
+        <textarea id="address" placeholder="Full address"></textarea>
+      </div>
+
+      <hr />
+      <h3 style="margin:6px 0 10px 0;color:var(--accent)">Photos (upload)</h3>
+      <div>
+        <label class="small">Upload up to 3 photos (will appear on the biodata)</label>
+        <input type="file" id="photoInput" accept="image/*" multiple />
+        <div class="photos" id="photoList"></div>
+      </div>
+
+      <div style="margin-top:16px; display:flex; gap:8px; align-items:center;">
+        <button class="btn" id="applyBtn">Apply to Preview</button>
+        <button class="btn secondary" id="resetBtn" type="button">Reset Form</button>
+        <button class="btn" id="printBtn" type="button">Print / Save as PDF</button>
+      </div>
+
+      <p style="font-size:12px; color:var(--muted); margin-top:12px;">
+        Tip: After filling details click "Apply to Preview". Use Print → Save as PDF for an export.
+      </p>
+    </div>
+
+    <!-- Preview / printable -->
+    <div class="preview" aria-label="Biodata preview">
+      <div class="paper" id="paper">
+        <div class="header">
+          <img src="" alt="" id="logo" style="width:60px; display:none" />
+          <h1>Biodata</h1>
+        </div>
+
+        <div class="two-columns">
+          <div>
+            <div class="section-title">PERSONAL DETAILS</div>
+
+            <div class="field-row"><div class="label">Name</div><div class="value" id="p_name">-</div></div>
+            <div class="field-row"><div class="label">Date of Birth</div><div class="value" id="p_dob">-</div></div>
+            <div class="field-row"><div class="label">Place of Birth</div><div class="value" id="p_pob">-</div></div>
+            <div class="field-row"><div class="label">Complexion</div><div class="value" id="p_complexion">-</div></div>
+            <div class="field-row"><div class="label">Height</div><div class="value" id="p_height">-</div></div>
+            <div class="field-row"><div class="label">Gotra / Maternal Gothra</div><div class="value" id="p_gotra">-</div></div>
+            <div class="field-row"><div class="label">Education</div><div class="value" id="p_education">-</div></div>
+            <div class="field-row"><div class="label">Religion</div><div class="value" id="p_religion">-</div></div>
+            <div class="field-row"><div class="label">Caste</div><div class="value" id="p_caste">-</div></div>
+            <div class="field-row"><div class="label">Company</div><div class="value" id="p_company">-</div></div>
+            <div class="field-row"><div class="label">Job / Designation</div><div class="value" id="p_designation">-</div></div>
+            <div class="field-row"><div class="label">Package</div><div class="value" id="p_package">-</div></div>
+          </div>
+
+          <div>
+            <div class="section-title">FAMILY DETAILS</div>
+            <div class="field-row"><div class="label">Father's Name</div><div class="value" id="p_father">-</div></div>
+            <div class="field-row"><div class="label">Father's Occupation</div><div class="value" id="p_fatherOcc">-</div></div>
+            <div class="field-row"><div class="label">Mother's Name</div><div class="value" id="p_mother">-</div></div>
+            <div class="field-row"><div class="label">Mother's Occupation</div><div class="value" id="p_motherOcc">-</div></div>
+            <div class="field-row"><div class="label">Siblings</div><div class="value" id="p_siblings">-</div></div>
+
+            <div class="section-title" style="margin-top:12px">CONTACT DETAILS</div>
+            <div class="field-row"><div class="label">Father's Contact</div><div class="value" id="p_phone">-</div></div>
+            <div class="field-row" style="border-bottom:none;"><div class="label">Address</div><div class="value" id="p_address">-</div></div>
+          </div>
+        </div>
+
+        <div class="big-photos" id="bigPhotos">
+          <!-- inserted images -->
+        </div>
+
+        <div style="text-align:center; margin-top:18px; color:#0b6b6b; font-weight:600;">www.myperfectbiodata.com</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // helper to set text
+    function setText(id, text){
+      document.getElementById(id).textContent = text || "-";
+    }
+
+    // photo handling
+    const photoInput = document.getElementById("photoInput");
+    const photoList = document.getElementById("photoList");
+    const bigPhotos = document.getElementById("bigPhotos");
+    let photoFiles = [];
+
+    photoInput.addEventListener("change", (e) => {
+      photoFiles = Array.from(e.target.files).slice(0,3); // limit to 3
+      renderPhotoThumbs();
+    });
+
+    function renderPhotoThumbs(){
+      photoList.innerHTML = "";
+      photoFiles.forEach((file, idx) => {
+        const reader = new FileReader();
+        const box = document.createElement("div");
+        box.className = "photo-preview";
+        photoList.appendChild(box);
+
+        reader.onload = function(ev){
+          const img = document.createElement("img");
+          img.src = ev.target.result;
+          box.innerHTML = "";
+          box.appendChild(img);
+
+          // add small remove button
+          const btn = document.createElement("button");
+          btn.textContent = "Remove";
+          btn.style.position="absolute";
+          btn.style.bottom="6px";
+          btn.style.left="6px";
+          btn.style.fontSize="12px";
+          btn.className="small";
+          btn.onclick = () => {
+            photoFiles.splice(idx,1);
+            renderPhotoThumbs();
+          };
+          box.appendChild(btn);
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    // apply to preview
+    document.getElementById("applyBtn").addEventListener("click", () => {
+      setText("p_name", document.getElementById("name").value);
+      const dob = document.getElementById("dob").value;
+      setText("p_dob", dob ? (new Date(dob)).toLocaleDateString() : "-");
+      setText("p_pob", document.getElementById("pob").value);
+      setText("p_complexion", document.getElementById("complexion").value);
+      setText("p_height", document.getElementById("height").value);
+      const gotra = document.getElementById("gotra").value;
+      setText("p_gotra", gotra);
+      setText("p_education", document.getElementById("education").value);
+      setText("p_religion", document.getElementById("religion").value);
+      setText("p_caste", document.getElementById("caste").value);
+      setText("p_company", document.getElementById("company").value);
+      setText("p_designation", document.getElementById("designation").value);
+      setText("p_package", document.getElementById("package").value);
+
+      setText("p_father", document.getElementById("father").value);
+      setText("p_fatherOcc", document.getElementById("fatherOcc").value);
+      setText("p_mother", document.getElementById("mother").value);
+      setText("p_motherOcc", document.getElementById("motherOcc").value);
+      setText("p_siblings", document.getElementById("siblings").value);
+
+      setText("p_phone", document.getElementById("phone").value);
+      setText("p_address", document.getElementById("address").value);
+
+      // render big photos
+      bigPhotos.innerHTML = "";
+      if(photoFiles.length === 0){
+        // empty placeholder single photo
+        const ph = document.createElement("div");
+        ph.className = "big";
+        ph.style.display="flex";
+        ph.style.alignItems="center";
+        ph.style.justifyContent="center";
+        ph.style.color="#7da7a6";
+        ph.textContent = "No photo uploaded";
+        bigPhotos.appendChild(ph);
+      } else {
+        photoFiles.forEach((file) => {
+          const reader = new FileReader();
+          reader.onload = function(ev){
+            const div = document.createElement("div");
+            div.className = "big";
+            const img = document.createElement("img");
+            img.src = ev.target.result;
+            div.appendChild(img);
+            bigPhotos.appendChild(div);
+          };
+          reader.readAsDataURL(file);
+        });
+      }
+
+      // scroll preview into view on small screens
+      document.querySelector(".preview").scrollIntoView({behavior:"smooth"});
+    });
+
+    // print button
+    document.getElementById("printBtn").addEventListener("click", ()=> window.print());
+
+    // reset
+    document.getElementById("resetBtn").addEventListener("click", ()=>{
+      if(confirm("Clear form?")){
+        document.querySelectorAll("input[type=text], input[type=date], input[type=tel], textarea").forEach(i=>i.value="");
+        photoFiles = [];
+        photoInput.value = "";
+        renderPhotoThumbs();
+        // clear preview fields
+        const ids = ["p_name","p_dob","p_pob","p_complexion","p_height","p_gotra","p_education","p_religion","p_caste","p_company","p_designation","p_package","p_father","p_fatherOcc","p_mother","p_motherOcc","p_siblings","p_phone","p_address"];
+        ids.forEach(id=>setText(id,"-"));
+        bigPhotos.innerHTML = "";
+      }
+    });
+
+    // initialize small placeholders
+    (function init(){
+      setText("p_name","-");
+      bigPhotos.innerHTML = '<div class="big" style="display:flex;align-items:center;justify-content:center;color:#7da7a6">Upload photos to preview</div>';
+    }());
+  </script>
+</body>
+</html>
