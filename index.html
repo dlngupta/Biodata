@@ -3,22 +3,47 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Biodata Template</title>
   <style>
     :root{
-      --bg:#e9f7f6;
+      --bg:#f0f9ff;
       --panel:#ffffff;
-      --accent:#0b6b8f;
-      --muted:#666;
-      --pad:16px;
+      --accent:#0284c7;
+      --accent-light:#0ea5e9;
+      --accent-dark:#075985;
+      --success:#10b981;
+      --danger:#ef4444;
+      --muted:#64748b;
+      --text:#1e293b;
+      --border:#e2e8f0;
+      --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+      --pad:20px;
       --maxw:1000px;
     }
+    * {
+      box-sizing: border-box;
+    }
     body{
-      font-family: "Segoe UI", Roboto, Arial, sans-serif;
-      background: linear-gradient(#f6fbfb, #eef9f8);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
       margin:0;
-      padding:24px;
+      padding:20px;
       display:flex;
       justify-content:center;
+      position: relative;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%23ffffff" fill-opacity="0.05"><path d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/></g></g></svg>') repeat;
+      pointer-events: none;
+      z-index: 0;
     }
 
     .container{
@@ -26,34 +51,106 @@
       max-width:800px;
       display:flex;
       flex-direction:column;
-      gap:20px;
+      gap:24px;
       align-items:stretch;
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     /* Form panel */
     .form-card{
       background:var(--panel);
-      padding:var(--pad);
-      border-radius:10px;
-      box-shadow:0 6px 18px rgba(16,24,40,0.08);
+      padding:30px;
+      border-radius:16px;
+      box-shadow:
+        0 20px 25px -5px rgba(0,0,0,0.1),
+        0 10px 10px -5px rgba(0,0,0,0.04);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 1;
     }
-    .form-card h2{ margin:0 0 12px 0; color:var(--accent) }
-    .group{ margin-bottom:12px; }
-    .group label{ display:block; font-size:13px; color:var(--muted); margin-bottom:6px; }
+    .form-card::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: 16px;
+      padding: 1px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+    .form-card h2{
+      margin:0 0 20px 0;
+      color:var(--accent);
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+    }
+    .form-card h3 {
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+    }
+    .group{ margin-bottom:16px; }
+    .group label{
+      display:block;
+      font-size:13px;
+      font-weight: 500;
+      color:var(--muted);
+      margin-bottom:8px;
+      letter-spacing: 0.2px;
+    }
     .group input[type="text"],
     .group input[type="date"],
     .group input[type="tel"],
     .group select,
     .group textarea{
       width:100%;
-      padding:8px 10px;
-      border:1px solid #dbe7e5;
-      border-radius:6px;
+      padding:12px 14px;
+      border:2px solid rgba(203, 213, 225, 0.3);
+      border-radius:10px;
       font-size:14px;
       box-sizing:border-box;
-      background:#fff;
+      background:rgba(255,255,255,0.95);
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
     }
-    textarea{ min-height:70px; resize:vertical; }
+    .group input:focus,
+    .group textarea:focus,
+    .group select:focus,
+    #siblingMarital:focus {
+      outline: none;
+      border-color: var(--accent-light);
+      background: rgba(255,255,255,1);
+      box-shadow:
+        0 0 0 4px rgba(2, 132, 199, 0.1),
+        0 1px 2px rgba(0,0,0,0.05);
+      transform: translateY(-1px);
+    }
+    .group input::placeholder,
+    .group textarea::placeholder {
+      color: rgba(100, 116, 139, 0.6);
+      font-size: 13px;
+    }
+    textarea{
+      min-height:80px;
+      resize:vertical;
+      font-family: inherit;
+    }
 
     .two-col{ display:grid; grid-template-columns:1fr 1fr; gap:8px; }
 
@@ -66,26 +163,27 @@
     .photo-preview{
       width:100px;
       height:120px;
-      border-radius:8px;
-      background:#f4f7f7;
-      border:2px solid #ffffff;
+      border-radius:12px;
+      background: linear-gradient(135deg, #f8fafb, #e9f2f1);
+      border:2px solid rgba(255,255,255,0.8);
       display:flex;
       align-items:center;
       justify-content:center;
       overflow:hidden;
       position:relative;
       box-shadow:
-        0 2px 4px rgba(0,0,0,0.08),
-        0 4px 8px rgba(0,0,0,0.06),
-        inset 0 0 0 1px rgba(11,107,143,0.15);
-      transition: all 0.2s ease;
+        0 4px 6px rgba(0,0,0,0.07),
+        0 8px 16px rgba(0,0,0,0.05),
+        inset 0 0 0 1px rgba(11,107,143,0.1);
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
     }
     .photo-preview:hover {
-      transform: translateY(-2px);
+      transform: translateY(-4px) scale(1.02);
       box-shadow:
-        0 4px 8px rgba(0,0,0,0.12),
-        0 6px 12px rgba(0,0,0,0.08),
-        inset 0 0 0 1px rgba(11,107,143,0.25);
+        0 6px 12px rgba(0,0,0,0.1),
+        0 12px 24px rgba(0,0,0,0.08),
+        inset 0 0 0 1px rgba(11,107,143,0.2);
     }
     .photo-preview img{
       width:100%;
@@ -96,59 +194,209 @@
 
     .btn {
       display:inline-block;
-      padding:8px 12px;
-      border-radius:6px;
-      background:var(--accent);
+      padding:12px 24px;
+      border-radius:10px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-light));
       color:#fff;
       text-decoration:none;
       border:none;
       cursor:pointer;
       font-size:14px;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+      transition: all 0.3s ease;
+      box-shadow:
+        0 4px 6px rgba(2, 132, 199, 0.2),
+        0 1px 3px rgba(0,0,0,0.08);
+      position: relative;
+      overflow: hidden;
     }
-    .btn.secondary{ background:#6aa5b6; }
-    .small { font-size:13px; padding:6px 8px; }
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s ease;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow:
+        0 6px 12px rgba(2, 132, 199, 0.3),
+        0 2px 4px rgba(0,0,0,0.1);
+    }
+    .btn:hover::before {
+      left: 100%;
+    }
+    .btn:active {
+      transform: translateY(0);
+      box-shadow:
+        0 2px 4px rgba(2, 132, 199, 0.2),
+        0 1px 2px rgba(0,0,0,0.08);
+    }
+    .btn.secondary{
+      background: linear-gradient(135deg, #64748b, #94a3b8);
+      box-shadow:
+        0 4px 6px rgba(100, 116, 139, 0.2),
+        0 1px 3px rgba(0,0,0,0.08);
+    }
+    .btn.secondary:hover {
+      box-shadow:
+        0 6px 12px rgba(100, 116, 139, 0.3),
+        0 2px 4px rgba(0,0,0,0.1);
+    }
+    .small {
+      font-size:13px;
+      padding:8px 16px;
+    }
 
     /* Preview panel (print layout) */
     .preview{
-      background: var(--bg);
-      border-radius:10px;
-      padding:24px;
-      box-shadow:0 6px 18px rgba(16,24,40,0.06);
+      background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+      border-radius:16px;
+      padding:30px;
+      box-shadow:
+        0 20px 25px -5px rgba(0,0,0,0.1),
+        0 10px 10px -5px rgba(0,0,0,0.04);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.1);
       position:relative;
       min-height:640px;
+      z-index: 1;
+    }
+    .preview::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: 16px;
+      padding: 1px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      pointer-events: none;
     }
     .paper{
       width:100%;
       max-width:700px;
       margin:0 auto;
-      background: #eaf8f6;
-      border-radius:4px;
-      padding:28px 36px;
+      background: linear-gradient(135deg, #f0fffe 0%, #e6f9f7 100%);
+      border-radius:12px;
+      padding:32px 40px;
       box-sizing:border-box;
       position:relative;
       color:#123b45;
+      box-shadow:
+        0 10px 15px -3px rgba(0,0,0,0.08),
+        0 4px 6px -4px rgba(0,0,0,0.05);
+      border: 1px solid rgba(11, 107, 143, 0.1);
     }
     .paper .header{
       text-align:center;
       margin-bottom:18px;
     }
-    .paper h1{ margin:4px 0; color:#0c5160; font-size:26px; letter-spacing:0.5px; }
-    .section-title{ color:#0b5a68; font-weight:700; margin-top:8px; margin-bottom:8px; font-size:14px; border-bottom:3px solid #cfe6e4; display:inline-block; padding-bottom:4px; }
+    .paper h1{
+      margin:8px 0;
+      color:#0c5160;
+      font-size:28px;
+      letter-spacing:0.5px;
+      font-weight: 700;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    .section-title{
+      color:#0b5a68;
+      font-weight:700;
+      margin-top:16px;
+      margin-bottom:12px;
+      font-size:15px;
+      border-bottom:3px solid linear-gradient(90deg, #cfe6e4, transparent);
+      display:inline-block;
+      padding-bottom:6px;
+      letter-spacing: 0.5px;
+      position: relative;
+    }
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, #0b6b8f, #0ea5e9, transparent);
+      border-radius: 2px;
+    }
     .two-columns {
       display:block;
     }
-    .field-row{ display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid rgba(10,40,45,0.03); }
-    .field-row .label{ color:#2b5b62; width:45%; }
-    .field-row .value{ color:#143a3e; width:50%; text-align:right; }
+    .field-row{
+      display:flex;
+      justify-content:space-between;
+      padding:10px 8px;
+      border-bottom:1px solid rgba(10,40,45,0.05);
+      transition: all 0.2s ease;
+      border-radius: 4px;
+      margin: 2px 0;
+    }
+    .field-row:hover {
+      background: rgba(207,230,228,0.1);
+      padding-left: 12px;
+    }
+    .field-row .label{
+      color:#2b5b62;
+      width:45%;
+      font-weight: 500;
+      font-size: 14px;
+    }
+    .field-row .value{
+      color:#143a3e;
+      width:50%;
+      text-align:right;
+      font-weight: 400;
+      font-size: 14px;
+    }
 
     .family, .contact { margin-top:12px; }
 
+    .sibling-item {
+      padding: 6px 0;
+      border-left: 3px solid rgba(11, 107, 143, 0.2);
+      padding-left: 10px;
+      padding-right: 6px;
+      margin: 4px 0;
+      transition: all 0.2s ease;
+      border-radius: 0 4px 4px 0;
+      min-width: 200px;
+    }
+    .sibling-item:hover {
+      border-left-color: rgba(11, 107, 143, 0.4);
+      background: rgba(207,230,228,0.05);
+      padding-left: 14px;
+    }
+
     .photo-section {
-      margin-top:20px;
-      padding:20px;
-      background: linear-gradient(145deg, rgba(207,230,228,0.1), rgba(234,248,246,0.2));
-      border-radius:12px;
-      border:1px solid rgba(207,230,228,0.3);
+      margin-top:24px;
+      padding:24px;
+      background: linear-gradient(145deg, rgba(207,230,228,0.15), rgba(234,248,246,0.25));
+      border-radius:16px;
+      border:1px solid rgba(207,230,228,0.2);
+      box-shadow:
+        inset 0 2px 4px rgba(0,0,0,0.02),
+        0 4px 6px rgba(0,0,0,0.03);
+      position: relative;
+      overflow: hidden;
+    }
+    .photo-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+      pointer-events: none;
     }
 
     .big-photos{
@@ -218,10 +466,20 @@
 
     /* print */
     @media print {
-      body { background:white; margin:0; padding:0; }
+      @page {
+        margin: 0.5cm;
+        size: A4;
+      }
+      body {
+        background:white;
+        margin:0;
+        padding:0;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
       .container{ padding:0; }
       .form-card{ display:none; }
-      .preview{ box-shadow:none; padding:0; }
+      .preview{ box-shadow:none; padding:0; background:white; }
       .paper{ box-shadow:none; margin:0; border-radius:0; padding:20px; }
       .btn { display:none; }
       .big-photos .big {
@@ -238,11 +496,62 @@
         border: none !important;
         padding: 10px !important;
       }
+      #p_siblings {
+        page-break-inside: avoid;
+      }
+      .sibling-item {
+        border-left: 2px solid rgba(11, 107, 143, 0.3) !important;
+        padding-left: 8px !important;
+        background: none !important;
+      }
+      .sibling-item:hover {
+        border-left: 2px solid rgba(11, 107, 143, 0.3) !important;
+        padding-left: 8px !important;
+      }
     }
 
     /* responsive */
     @media (max-width:950px){
       .container{ padding:8px; }
+    }
+    @media (max-width:768px){
+      .group > div[style*="grid-template-columns"] {
+        grid-template-columns: 1fr !important;
+      }
+      #addSiblingBtn {
+        width: 100%;
+      }
+    }
+
+    /* Modal animations */
+    @keyframes modalFadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+    @keyframes modalSlideIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95) translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+    #photoModal {
+      animation: modalFadeIn 0.18s ease-out;
+      background: rgba(0,0,0,0.5); /* slightly lighter overlay for visibility */
+      display: none; /* default hidden */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #photoModalDialog {
+      animation: modalSlideIn 0.3s ease-out;
     }
   </style>
 </head>
@@ -279,9 +588,15 @@
         </div>
       </div>
 
-      <div class="group">
-        <label>Gotra / Maternal Gothra</label>
-        <input type="text" id="gotra" placeholder="Enter your gotra" />
+      <div class="two-col">
+        <div class="group">
+          <label>Gotra</label>
+          <input type="text" id="gotra" placeholder="Enter your gotra" />
+        </div>
+        <div class="group">
+          <label>Maternal Gotra</label>
+          <input type="text" id="maternalGotra" placeholder="Enter maternal gotra" />
+        </div>
       </div>
 
       <div class="group">
@@ -307,9 +622,9 @@
         <input style="margin-top:8px" type="text" id="package" placeholder="Enter your package (e.g., 16.5LPA)" />
       </div>
 
-      <hr />
+      <hr style="border: none; height: 1px; background: linear-gradient(90deg, transparent, rgba(2, 132, 199, 0.3), transparent); margin: 24px 0;" />
 
-      <h3 style="margin:6px 0 10px 0;color:var(--accent)">Family details</h3>
+      <h3 style="margin:12px 0 16px 0;color:var(--accent)">Family details</h3>
 
       <div class="group">
         <label>Father's name</label>
@@ -328,12 +643,22 @@
         <input type="text" id="motherOcc" placeholder="Enter mother's occupation" />
       </div>
       <div class="group">
-        <label>Siblings (notes)</label>
-        <textarea id="siblings" placeholder="Enter details about siblings (e.g., number, names, occupations)"></textarea>
+        <label>Siblings</label>
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr auto; gap:8px; margin-bottom:8px;">
+          <input type="text" id="siblingName" placeholder="Name" />
+          <select id="siblingMarital" style="padding:12px 14px; border:2px solid rgba(203, 213, 225, 0.3); border-radius:10px; font-size:14px; background:rgba(255,255,255,0.95); transition: all 0.3s ease; backdrop-filter: blur(10px); cursor: pointer;">
+            <option value="">Marital Status</option>
+            <option value="Married">Married</option>
+            <option value="Unmarried">Unmarried</option>
+          </select>
+          <input type="text" id="siblingOccupation" placeholder="Occupation" />
+          <button class="btn small" id="addSiblingBtn" type="button">+ Add</button>
+        </div>
+        <div id="siblingsList" style="display:flex; flex-direction:column; gap:6px;"></div>
       </div>
 
-      <hr />
-      <h3 style="margin:6px 0 10px 0;color:var(--accent)">Contact</h3>
+      <hr style="border: none; height: 1px; background: linear-gradient(90deg, transparent, rgba(2, 132, 199, 0.3), transparent); margin: 24px 0;" />
+      <h3 style="margin:12px 0 16px 0;color:var(--accent)">Contact</h3>
 
       <div class="group">
         <label>Father's contact number</label>
@@ -344,23 +669,115 @@
         <textarea id="address" placeholder="Enter your full address"></textarea>
       </div>
 
-      <hr />
-      <h3 style="margin:6px 0 10px 0;color:var(--accent)">Photos (upload)</h3>
+      <hr style="border: none; height: 1px; background: linear-gradient(90deg, transparent, rgba(2, 132, 199, 0.3), transparent); margin: 24px 0;" />
+      <h3 style="margin:12px 0 16px 0;color:var(--accent)">Photos (upload)</h3>
       <div>
-        <label class="small">Upload up to 3 photos (will appear on the biodata)</label>
-        <input type="file" id="photoInput" accept="image/*" multiple />
+        <label class="small">Upload up to 5 photos (will appear on the biodata)</label>
+        <div style="margin-top:10px;">
+          <input type="file" id="photoInput" accept="image/*" multiple style="display:none;" />
+          <button class="btn small" onclick="document.getElementById('photoInput').click()" type="button">
+            📸 Add Photos
+          </button>
+          <span style="margin-left:10px; font-size:12px; color:var(--muted);" id="photoCount">0/5 photos selected</span>
+        </div>
         <div class="photos" id="photoList"></div>
+      </div>
+
+      <!-- Photo Preview Modal -->
+      <div id="photoModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:1000; padding:20px; overflow:auto; align-items:center; justify-content:center;" onclick="if(event.target === this) closePhotoModal();">
+        <div id="photoModalDialog" role="dialog" aria-modal="true" aria-label="Edit Photo Dialog" style="background:white; border-radius:12px; max-width:920px; width:calc(100% - 40px); padding:24px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); position:relative; max-height:85vh; overflow:auto;">
+          <button id="photoModalClose" onclick="closePhotoModal()" style="position:absolute; top:16px; right:16px; width:36px; height:36px; border-radius:50%; border:none; background:rgba(100,116,139,0.06); color:#64748b; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:20px; transition:all 0.2s ease; z-index:10;" onmouseover="this.style.background='rgba(239,68,68,0.12)'; this.style.color='#ef4444';" onmouseout="this.style.background='rgba(100,116,139,0.06)'; this.style.color='#64748b';" aria-label="Close dialog" type="button">×</button>
+          <h3 style="margin-top:0; color:var(--accent); padding-right:40px;">Edit Photo</h3>
+
+          <div id="canvasContainer" style="display:flex; gap:20px; align-items:flex-start;">
+            <!-- Original image with crop box -->
+            <div style="flex:1; min-width:0;">
+              <h4 style="margin:0 0 10px 0; font-size:14px; color:var(--muted);">Original (drag to position)</h4>
+              <div style="position:relative; display:inline-block; border:2px solid #ddd; border-radius:8px; overflow:hidden; max-width:100%;">
+                <canvas id="sourceCanvas" style="display:block; cursor:move; max-width:100%; height:auto;"></canvas>
+                <div id="cropBox" style="position:absolute; border:2px solid #0b6b8f; box-shadow:0 0 0 1000px rgba(0,0,0,0.5); pointer-events:none;">
+                  <div style="position:absolute; width:100%; height:100%; border:1px dashed rgba(255,255,255,0.5);"></div>
+                  <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); color:white; font-size:12px; text-shadow:0 0 4px rgba(0,0,0,0.8); white-space:nowrap;">Crop Area</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Cropped preview -->
+            <div style="flex:1; min-width:0;">
+              <h4 style="margin:0 0 10px 0; font-size:14px; color:var(--muted);">Preview</h4>
+              <canvas id="previewCanvas" style="border:2px solid #ddd; border-radius:8px; display:block; max-width:100%; height:auto;"></canvas>
+            </div>
+          </div>
+
+          <style>
+            @media (max-width: 600px) {
+              #canvasContainer {
+                flex-direction: column !important;
+              }
+              #sourceCanvas, #previewCanvas {
+                width: 100% !important;
+                max-width: 250px !important;
+                margin: 0 auto;
+              }
+              #photoModal {
+                padding: 10px !important;
+              }
+              #photoModalDialog {
+                padding: 16px !important;
+                max-height: 95vh !important;
+              }
+            }
+          </style>
+
+          <div style="margin-top:20px;">
+            <div style="margin:10px 0;">
+              <label style="display:block; margin-bottom:5px; font-size:13px; color:var(--muted);">Zoom: <span id="zoomValue">1.0x</span></label>
+              <input type="range" id="zoomSlider" min="0.5" max="3" step="0.1" value="1" style="width:100%;" />
+            </div>
+            <div style="margin:10px 0;">
+              <label style="display:block; margin-bottom:5px; font-size:13px; color:var(--muted);">Rotate: <span id="rotateValue">0°</span></label>
+              <input type="range" id="rotateSlider" min="-180" max="180" step="1" value="0" style="width:100%;" />
+            </div>
+            <div style="margin:10px 0;">
+              <label style="display:block; margin-bottom:5px; font-size:13px; color:var(--muted);">Crop Size:</label>
+              <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                <button class="btn small" onclick="setCropAspect(1)" type="button">Square</button>
+                <button class="btn small" onclick="setCropAspect(0.83)" type="button">Portrait</button>
+                <button class="btn small" onclick="setCropAspect(1.2)" type="button">Landscape</button>
+                <button class="btn small" onclick="fitToScreen()" type="button">Fit to Screen</button>
+                <button class="btn small" onclick="resetCrop()" type="button">Reset All</button>
+              </div>
+            </div>
+          </div>
+
+          <div style="display:flex; gap:10px; justify-content:center; margin-top:20px;">
+            <button class="btn" onclick="saveCroppedImage()" type="button">💾 Save Changes</button>
+            <button class="btn secondary" onclick="closePhotoModal()" type="button">Cancel</button>
+          </div>
+        </div>
       </div>
 
       <div style="margin-top:16px; display:flex; gap:8px; align-items:center;">
         <button class="btn" id="applyBtn">Apply to Preview</button>
-        <button class="btn secondary" id="resetBtn" type="button">Reset Form</button>
+        <button class="btn" id="resetBtn" type="button">Reset Form</button>
         <button class="btn" id="printBtn" type="button">Print / Save as PDF</button>
       </div>
 
-      <p style="font-size:12px; color:var(--muted); margin-top:12px;">
-        Tip: After filling details click "Apply to Preview". Use Print → Save as PDF for an export.
-      </p>
+      <div style="
+        background: linear-gradient(135deg, rgba(2, 132, 199, 0.08), rgba(14, 165, 233, 0.05));
+        border: 1px solid rgba(2, 132, 199, 0.2);
+        border-radius: 8px;
+        padding: 12px 16px;
+        margin-top: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      ">
+        <span style="font-size: 18px;">💡</span>
+        <p style="font-size: 13px; color: #075985; margin: 0; line-height: 1.5;">
+          <strong>Tip:</strong> After filling details click "Apply to Preview". Use Print → Save as PDF for an export.
+        </p>
+      </div>
     </div>
 
     <!-- Preview / printable -->
@@ -380,7 +797,8 @@
             <div class="field-row"><div class="label">Place of Birth</div><div class="value" id="p_pob">-</div></div>
             <div class="field-row"><div class="label">Complexion</div><div class="value" id="p_complexion">-</div></div>
             <div class="field-row"><div class="label">Height</div><div class="value" id="p_height">-</div></div>
-            <div class="field-row"><div class="label">Gotra / Maternal Gothra</div><div class="value" id="p_gotra">-</div></div>
+            <div class="field-row"><div class="label">Gotra</div><div class="value" id="p_gotra">-</div></div>
+            <div class="field-row"><div class="label">Maternal Gotra</div><div class="value" id="p_maternalGotra">-</div></div>
             <div class="field-row"><div class="label">Education</div><div class="value" id="p_education">-</div></div>
             <div class="field-row"><div class="label">Religion</div><div class="value" id="p_religion">-</div></div>
             <div class="field-row"><div class="label">Caste</div><div class="value" id="p_caste">-</div></div>
@@ -395,7 +813,7 @@
             <div class="field-row"><div class="label">Father's Occupation</div><div class="value" id="p_fatherOcc">-</div></div>
             <div class="field-row"><div class="label">Mother's Name</div><div class="value" id="p_mother">-</div></div>
             <div class="field-row"><div class="label">Mother's Occupation</div><div class="value" id="p_motherOcc">-</div></div>
-            <div class="field-row"><div class="label">Siblings</div><div class="value" id="p_siblings">-</div></div>
+            <div class="field-row" style="align-items: flex-start;"><div class="label" style="padding-top: 2px;">Siblings</div><div class="value" id="p_siblings">-</div></div>
 
             <div class="section-title" style="margin-top:12px">CONTACT DETAILS</div>
             <div class="field-row"><div class="label">Father's Contact</div><div class="value" id="p_phone">-</div></div>
@@ -410,7 +828,20 @@
           </div>
         </div>
 
-        <div style="text-align:center; margin-top:18px; color:#0b6b6b; font-weight:600;">https://biodataself.netlify.app/</div>
+        <div style="
+          text-align:center;
+          margin-top:24px;
+          padding-top:20px;
+          border-top:2px solid rgba(11,107,143,0.1);
+          color:#0b6b8f;
+          font-weight:600;
+          font-size:13px;
+          letter-spacing:1px;
+          text-transform:uppercase;
+          opacity:0.8;
+        ">
+          www.myperfectbiodata.com
+        </div>
       </div>
     </div>
   </div>
@@ -427,57 +858,532 @@
       const photoInput = document.getElementById("photoInput");
       const photoList = document.getElementById("photoList");
       const bigPhotos = document.getElementById("bigPhotos");
+      const photoCount = document.getElementById("photoCount");
       let photoFiles = [];
+      let currentEditingIndex = -1;
+
+      // Siblings handling
+      let siblings = [];
+      const siblingName = document.getElementById("siblingName");
+      const siblingMarital = document.getElementById("siblingMarital");
+      const siblingOccupation = document.getElementById("siblingOccupation");
+      const addSiblingBtn = document.getElementById("addSiblingBtn");
+      const siblingsList = document.getElementById("siblingsList");
+
+      // Add sibling functionality
+      function addSibling() {
+        const name = siblingName.value.trim();
+        const marital = siblingMarital.value;
+        const occupation = siblingOccupation.value.trim();
+
+        if (name && marital && occupation) {
+          siblings.push({
+            name: name,
+            marital: marital,
+            occupation: occupation
+          });
+          renderSiblings();
+          siblingName.value = "";
+          siblingMarital.value = "";
+          siblingOccupation.value = "";
+        } else {
+          alert("Please fill all sibling details (Name, Marital Status, and Occupation)");
+        }
+      }
+
+      // Render siblings list
+      function renderSiblings() {
+        siblingsList.innerHTML = "";
+
+        if (siblings.length === 0) {
+          const emptyMsg = document.createElement("div");
+          emptyMsg.style.padding = "8px";
+          emptyMsg.style.fontSize = "12px";
+          emptyMsg.style.color = "#999";
+          emptyMsg.style.fontStyle = "italic";
+          emptyMsg.textContent = "No siblings added yet";
+          siblingsList.appendChild(emptyMsg);
+          return;
+        }
+
+        siblings.forEach((sibling, idx) => {
+          const siblingDiv = document.createElement("div");
+          siblingDiv.style.display = "flex";
+          siblingDiv.style.alignItems = "center";
+          siblingDiv.style.gap = "10px";
+          siblingDiv.style.padding = "12px 16px";
+          siblingDiv.style.background = "linear-gradient(135deg, rgba(248, 250, 251, 0.95), rgba(241, 245, 249, 0.95))";
+          siblingDiv.style.borderRadius = "8px";
+          siblingDiv.style.border = "1px solid rgba(203, 213, 225, 0.3)";
+          siblingDiv.style.backdropFilter = "blur(10px)";
+          siblingDiv.style.boxShadow = "0 2px 4px rgba(0,0,0,0.04)";
+          siblingDiv.style.transition = "all 0.2s ease";
+
+          const siblingInfo = document.createElement("div");
+          siblingInfo.style.flex = "1";
+          siblingInfo.style.display = "flex";
+          siblingInfo.style.flexDirection = "column";
+          siblingInfo.style.gap = "4px";
+
+          const nameLine = document.createElement("div");
+          nameLine.style.fontSize = "14px";
+          nameLine.style.fontWeight = "600";
+          nameLine.style.color = "#0c5160";
+          nameLine.textContent = sibling.name;
+
+          const detailsLine = document.createElement("div");
+          detailsLine.style.fontSize = "12px";
+          detailsLine.style.color = "#2b5b62";
+          detailsLine.innerHTML = `<span style="font-weight: 500;">${sibling.marital}</span> • ${sibling.occupation}`;
+
+          siblingInfo.appendChild(nameLine);
+          siblingInfo.appendChild(detailsLine);
+
+          const removeBtn = document.createElement("button");
+          removeBtn.textContent = "×";
+          removeBtn.style.width = "24px";
+          removeBtn.style.height = "24px";
+          removeBtn.style.borderRadius = "50%";
+          removeBtn.style.border = "1px solid rgba(239, 68, 68, 0.3)";
+          removeBtn.style.background = "linear-gradient(135deg, #fff, #fef2f2)";
+          removeBtn.style.color = "#ef4444";
+          removeBtn.style.cursor = "pointer";
+          removeBtn.style.fontSize = "16px";
+          removeBtn.style.padding = "0";
+          removeBtn.style.display = "flex";
+          removeBtn.style.alignItems = "center";
+          removeBtn.style.justifyContent = "center";
+          removeBtn.style.transition = "all 0.2s ease";
+          removeBtn.style.boxShadow = "0 1px 2px rgba(0,0,0,0.05)";
+          removeBtn.onclick = () => {
+            siblings.splice(idx, 1);
+            renderSiblings();
+          };
+
+          // Add hover effects
+          siblingDiv.onmouseenter = () => {
+            siblingDiv.style.transform = "translateX(2px)";
+            siblingDiv.style.boxShadow = "0 4px 8px rgba(0,0,0,0.08)";
+          };
+          siblingDiv.onmouseleave = () => {
+            siblingDiv.style.transform = "translateX(0)";
+            siblingDiv.style.boxShadow = "0 2px 4px rgba(0,0,0,0.04)";
+          };
+
+          removeBtn.onmouseenter = () => {
+            removeBtn.style.background = "linear-gradient(135deg, #fee2e2, #fca5a5)";
+            removeBtn.style.transform = "scale(1.1)";
+          };
+          removeBtn.onmouseleave = () => {
+            removeBtn.style.background = "linear-gradient(135deg, #fff, #fef2f2)";
+            removeBtn.style.transform = "scale(1)";
+          };
+
+          siblingDiv.appendChild(siblingInfo);
+          siblingDiv.appendChild(removeBtn);
+          siblingsList.appendChild(siblingDiv);
+        });
+      }
+
+      // Add event listeners for siblings
+      addSiblingBtn.addEventListener("click", addSibling);
+      [siblingName, siblingOccupation].forEach(input => {
+        input.addEventListener("keypress", (e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            addSibling();
+          }
+        });
+      });
+
+      // Crop editor variables
+      let sourceCanvas, sourceCtx, previewCanvas, previewCtx;
+      let currentImage, zoomLevel = 1, rotation = 0;
+      let imageX = 0, imageY = 0;
+      let isDragging = false, dragStartX = 0, dragStartY = 0;
+      let cropX = 50, cropY = 50, cropWidth = 200, cropHeight = 200;
+      let cropAspectRatio = 1;
+
+      // Initialize crop canvases
+      function initCropCanvases() {
+        sourceCanvas = document.getElementById("sourceCanvas");
+        sourceCtx = sourceCanvas.getContext("2d");
+        previewCanvas = document.getElementById("previewCanvas");
+        previewCtx = previewCanvas.getContext("2d");
+
+        sourceCanvas.width = 300;
+        sourceCanvas.height = 300;
+        previewCanvas.width = 200;
+        previewCanvas.height = 200;
+
+        // Setup drag events for both mouse and touch
+        sourceCanvas.addEventListener("mousedown", startDrag);
+        sourceCanvas.addEventListener("mousemove", drag);
+        sourceCanvas.addEventListener("mouseup", endDrag);
+        sourceCanvas.addEventListener("mouseleave", endDrag);
+
+        // Touch events for mobile
+        sourceCanvas.addEventListener("touchstart", function(e) {
+          e.preventDefault();
+          const touch = e.touches[0];
+          startDrag(touch);
+        });
+        sourceCanvas.addEventListener("touchmove", function(e) {
+          e.preventDefault();
+          const touch = e.touches[0];
+          drag(touch);
+        });
+        sourceCanvas.addEventListener("touchend", endDrag);
+      }
+
+      // Update photo count display
+      function updatePhotoCount() {
+        photoCount.textContent = `${photoFiles.length}/5 photos selected`;
+      }
 
       photoInput.addEventListener("change", (e) => {
-        photoFiles = Array.from(e.target.files).slice(0,3); // limit to 3
+        const newFiles = Array.from(e.target.files);
+
+        // Add new files to existing ones (up to 5 total)
+        newFiles.forEach(file => {
+          if (photoFiles.length < 5) {
+            // Create a wrapper object to store both file and edited data
+            photoFiles.push({
+              file: file,
+              originalSrc: null,
+              editedSrc: null
+            });
+          }
+        });
+
         renderPhotoThumbs();
+        updatePhotoCount();
+
+        // Reset file input for next selection
+        photoInput.value = "";
       });
 
       function renderPhotoThumbs(){
         photoList.innerHTML = "";
-        photoFiles.forEach((file, idx) => {
-          const reader = new FileReader();
+        photoFiles.forEach((photoData, idx) => {
           const box = document.createElement("div");
           box.className = "photo-preview";
+          box.style.position = "relative";
           photoList.appendChild(box);
 
+          const reader = new FileReader();
           reader.onload = function(ev){
+            // Store original source if not already stored
+            if (!photoData.originalSrc) {
+              photoData.originalSrc = ev.target.result;
+            }
+
             const img = document.createElement("img");
-            img.src = ev.target.result;
+            img.src = photoData.editedSrc || photoData.originalSrc;
             box.innerHTML = "";
             box.appendChild(img);
 
-            // add small remove button
-            const btn = document.createElement("button");
-            btn.textContent = "×";
-            btn.style.position="absolute";
-            btn.style.top="5px";
-            btn.style.right="5px";
-            btn.style.fontSize="18px";
-            btn.style.width="24px";
-            btn.style.height="24px";
-            btn.style.borderRadius="50%";
-            btn.style.background="rgba(255,255,255,0.95)";
-            btn.style.border="1px solid rgba(220,53,69,0.3)";
-            btn.style.color="#dc3545";
-            btn.style.cursor="pointer";
-            btn.style.padding="0";
-            btn.style.display="flex";
-            btn.style.alignItems="center";
-            btn.style.justifyContent="center";
-            btn.style.boxShadow="0 2px 4px rgba(0,0,0,0.2)";
-            btn.style.zIndex="2";
-            btn.title="Remove photo";
-            btn.onclick = () => {
+            // Add edit button
+            const editBtn = document.createElement("button");
+            editBtn.innerHTML = "✏️";
+            editBtn.style.position="absolute";
+            editBtn.style.bottom="5px";
+            editBtn.style.left="5px";
+            editBtn.style.fontSize="14px";
+            editBtn.style.width="28px";
+            editBtn.style.height="28px";
+            editBtn.style.borderRadius="50%";
+            editBtn.style.background="rgba(255,255,255,0.95)";
+            editBtn.style.border="1px solid rgba(11,107,143,0.3)";
+            editBtn.style.color="#0b6b8f";
+            editBtn.style.cursor="pointer";
+            editBtn.style.padding="0";
+            editBtn.style.display="flex";
+            editBtn.style.alignItems="center";
+            editBtn.style.justifyContent="center";
+            editBtn.style.boxShadow="0 2px 4px rgba(0,0,0,0.2)";
+            editBtn.style.zIndex="2";
+            editBtn.title="Edit photo";
+            editBtn.onclick = (e) => {
+              e.stopPropagation();
+              openPhotoModal(idx);
+            };
+            box.appendChild(editBtn);
+
+            // Add remove button
+            const removeBtn = document.createElement("button");
+            removeBtn.textContent = "×";
+            removeBtn.style.position="absolute";
+            removeBtn.style.top="5px";
+            removeBtn.style.right="5px";
+            removeBtn.style.fontSize="18px";
+            removeBtn.style.width="24px";
+            removeBtn.style.height="24px";
+            removeBtn.style.borderRadius="50%";
+            removeBtn.style.background="rgba(255,255,255,0.95)";
+            removeBtn.style.border="1px solid rgba(220,53,69,0.3)";
+            removeBtn.style.color="#dc3545";
+            removeBtn.style.cursor="pointer";
+            removeBtn.style.padding="0";
+            removeBtn.style.display="flex";
+            removeBtn.style.alignItems="center";
+            removeBtn.style.justifyContent="center";
+            removeBtn.style.boxShadow="0 2px 4px rgba(0,0,0,0.2)";
+            removeBtn.style.zIndex="2";
+            removeBtn.title="Remove photo";
+            removeBtn.onclick = (e) => {
+              e.stopPropagation();
               photoFiles.splice(idx,1);
               renderPhotoThumbs();
+              updatePhotoCount();
             };
-            box.appendChild(btn);
+            box.appendChild(removeBtn);
+
+            // Add click to preview
+            img.style.cursor = "pointer";
+            img.onclick = () => {
+              openPhotoModal(idx);
+            };
           };
-          reader.readAsDataURL(file);
+          reader.readAsDataURL(photoData.file);
         });
       }
+
+      // Drag functions
+      function startDrag(e) {
+        isDragging = true;
+        const rect = sourceCanvas.getBoundingClientRect();
+        dragStartX = e.clientX - rect.left - imageX;
+        dragStartY = e.clientY - rect.top - imageY;
+      }
+
+      function drag(e) {
+        if (!isDragging) return;
+        const rect = sourceCanvas.getBoundingClientRect();
+        imageX = e.clientX - rect.left - dragStartX;
+        imageY = e.clientY - rect.top - dragStartY;
+        drawImages();
+      }
+
+      function endDrag() {
+        isDragging = false;
+      }
+
+      // Draw functions
+      function drawImages() {
+        if (!currentImage) return;
+
+        // Clear and draw source image
+        sourceCtx.clearRect(0, 0, sourceCanvas.width, sourceCanvas.height);
+        sourceCtx.save();
+
+        // Apply transformations
+        sourceCtx.translate(sourceCanvas.width/2 + imageX, sourceCanvas.height/2 + imageY);
+        sourceCtx.rotate(rotation * Math.PI / 180);
+        sourceCtx.scale(zoomLevel, zoomLevel);
+
+        // Draw image centered
+        const drawWidth = currentImage.width;
+        const drawHeight = currentImage.height;
+        const scale = Math.min(sourceCanvas.width/drawWidth, sourceCanvas.height/drawHeight) * 0.8;
+        sourceCtx.drawImage(currentImage, -drawWidth*scale/2, -drawHeight*scale/2, drawWidth*scale, drawHeight*scale);
+
+        sourceCtx.restore();
+
+        // Update crop box position
+        updateCropBox();
+
+        // Draw preview
+        drawPreview();
+      }
+
+      function updateCropBox() {
+        const cropBox = document.getElementById("cropBox");
+        cropBox.style.left = cropX + "px";
+        cropBox.style.top = cropY + "px";
+        cropBox.style.width = cropWidth + "px";
+        cropBox.style.height = cropHeight + "px";
+      }
+
+      function drawPreview() {
+        if (!currentImage) return;
+
+        // Create temporary canvas for cropped area
+        const tempCanvas = document.createElement("canvas");
+        const tempCtx = tempCanvas.getContext("2d");
+        tempCanvas.width = cropWidth;
+        tempCanvas.height = cropHeight;
+
+        // Copy cropped area from source canvas
+        tempCtx.drawImage(sourceCanvas, cropX, cropY, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
+
+        // Draw to preview canvas
+        previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
+        previewCtx.drawImage(tempCanvas, 0, 0, cropWidth, cropHeight, 0, 0, previewCanvas.width, previewCanvas.height);
+      }
+
+      // Photo editing modal functions
+      window.openPhotoModal = function(index) {
+        currentEditingIndex = index;
+        const photoData = photoFiles[index];
+        currentImage = new Image();
+        currentImage.onload = function() {
+          initCropCanvases();
+          resetCrop();
+          drawImages();
+        };
+        currentImage.src = photoData.editedSrc || photoData.originalSrc;
+
+        const modal = document.getElementById("photoModal");
+        // Use flex centering so dialog is visible and centered
+        modal.style.display = "flex";
+        modal.style.alignItems = "center";
+        modal.style.justifyContent = "center";
+        // Lock background scroll
+        document.body.style.overflow = "hidden";
+
+        // Make dialog focusable and move focus
+        const dlg = document.getElementById("photoModalDialog");
+        dlg.tabIndex = -1;
+        setTimeout(() => {
+          dlg.focus();
+        }, 50);
+
+        // Add ESC key listener
+        document.addEventListener("keydown", escKeyListener);
+
+        attachSliderEvents();
+      };
+
+      window.closePhotoModal = function() {
+        const modal = document.getElementById("photoModal");
+        modal.style.display = "none";
+        // Restore background scrolling
+        document.body.style.overflow = "auto";
+        currentEditingIndex = -1;
+        // Remove ESC key listener
+        document.removeEventListener("keydown", escKeyListener);
+      };
+
+      // ESC key listener function
+      function escKeyListener(e) {
+        if (e.key === "Escape") {
+          closePhotoModal();
+        }
+      }
+
+      window.setCropAspect = function(ratio) {
+        cropAspectRatio = ratio;
+        cropHeight = cropWidth / ratio;
+        updateCropBox();
+        drawPreview();
+      };
+
+      window.fitToScreen = function() {
+        if (!currentImage) return;
+
+        // Reset position and rotation first
+        imageX = 0;
+        imageY = 0;
+        rotation = 0;
+
+        // Calculate the scale to fit image in canvas
+        const canvasSize = sourceCanvas.width;
+        const imageAspect = currentImage.width / currentImage.height;
+        const canvasAspect = 1; // Our canvas is square
+
+        let fitScale;
+        if (imageAspect > canvasAspect) {
+          // Image is wider - fit to width
+          fitScale = canvasSize / currentImage.width;
+        } else {
+          // Image is taller - fit to height
+          fitScale = canvasSize / currentImage.height;
+        }
+
+        // Apply a margin factor (0.9 = 90% of canvas)
+        fitScale *= 0.9;
+
+        // Calculate zoom level (inverse of our internal scale)
+        const internalScale = Math.min(sourceCanvas.width/currentImage.width, sourceCanvas.height/currentImage.height) * 0.8;
+        zoomLevel = fitScale / internalScale;
+
+        // Clamp zoom to slider range
+        zoomLevel = Math.max(0.5, Math.min(3, zoomLevel));
+
+        // Center the crop box
+        cropX = (sourceCanvas.width - cropWidth) / 2;
+        cropY = (sourceCanvas.height - cropHeight) / 2;
+
+        // Update UI controls
+        document.getElementById("zoomSlider").value = zoomLevel;
+        document.getElementById("rotateSlider").value = 0;
+        document.getElementById("zoomValue").textContent = zoomLevel.toFixed(1) + "x";
+        document.getElementById("rotateValue").textContent = "0°";
+
+        drawImages();
+      };
+
+      window.resetCrop = function() {
+        zoomLevel = 1;
+        rotation = 0;
+        imageX = 0;
+        imageY = 0;
+        cropX = 50;
+        cropY = 50;
+        cropWidth = 200;
+        cropHeight = 200;
+        cropAspectRatio = 1;
+
+        document.getElementById("zoomSlider").value = 1;
+        document.getElementById("rotateSlider").value = 0;
+        document.getElementById("zoomValue").textContent = "1.0x";
+        document.getElementById("rotateValue").textContent = "0°";
+
+        drawImages();
+      };
+
+      // Slider controls
+      window.attachSliderEvents = function() {
+        const zoomSlider = document.getElementById("zoomSlider");
+        const rotateSlider = document.getElementById("rotateSlider");
+
+        if (zoomSlider && !zoomSlider.hasListener) {
+          zoomSlider.addEventListener("input", function(e) {
+            zoomLevel = parseFloat(e.target.value);
+            document.getElementById("zoomValue").textContent = zoomLevel.toFixed(1) + "x";
+            drawImages();
+          });
+          zoomSlider.hasListener = true;
+        }
+
+        if (rotateSlider && !rotateSlider.hasListener) {
+          rotateSlider.addEventListener("input", function(e) {
+            rotation = parseInt(e.target.value);
+            document.getElementById("rotateValue").textContent = rotation + "°";
+            drawImages();
+          });
+          rotateSlider.hasListener = true;
+        }
+      };
+
+      window.saveCroppedImage = function() {
+        // Create canvas for final cropped image
+        const finalCanvas = document.createElement("canvas");
+        const finalCtx = finalCanvas.getContext("2d");
+        finalCanvas.width = 200;
+        finalCanvas.height = 240;
+
+        // Copy from preview canvas
+        finalCtx.fillStyle = "#fff";
+        finalCtx.fillRect(0, 0, finalCanvas.width, finalCanvas.height);
+        finalCtx.drawImage(previewCanvas, 0, 20, 200, 200);
+
+        const editedDataUrl = finalCanvas.toDataURL("image/jpeg", 0.9);
+        photoFiles[currentEditingIndex].editedSrc = editedDataUrl;
+        renderPhotoThumbs();
+        closePhotoModal();
+      };
 
       // apply to preview
       const applyButton = document.getElementById("applyBtn");
@@ -493,8 +1399,8 @@
           setText("p_pob", document.getElementById("pob").value);
           setText("p_complexion", document.getElementById("complexion").value);
           setText("p_height", document.getElementById("height").value);
-          const gotra = document.getElementById("gotra").value;
-          setText("p_gotra", gotra);
+          setText("p_gotra", document.getElementById("gotra").value);
+          setText("p_maternalGotra", document.getElementById("maternalGotra").value);
           setText("p_education", document.getElementById("education").value);
           setText("p_religion", document.getElementById("religion").value);
           setText("p_caste", document.getElementById("caste").value);
@@ -506,7 +1412,45 @@
           setText("p_fatherOcc", document.getElementById("fatherOcc").value);
           setText("p_mother", document.getElementById("mother").value);
           setText("p_motherOcc", document.getElementById("motherOcc").value);
-          setText("p_siblings", document.getElementById("siblings").value);
+
+          // Render siblings in a beautiful format
+          const siblingsContainer = document.getElementById("p_siblings");
+          if (siblings.length === 0) {
+            siblingsContainer.textContent = "-";
+            siblingsContainer.style.display = "block";
+          } else {
+            siblingsContainer.innerHTML = "";
+            siblingsContainer.style.display = "flex";
+            siblingsContainer.style.flexDirection = "column";
+            siblingsContainer.style.gap = "6px";
+            siblingsContainer.style.alignItems = "flex-end";
+            siblingsContainer.style.width = "100%";
+
+            siblings.forEach((sibling, idx) => {
+              const sibDiv = document.createElement("div");
+              sibDiv.className = "sibling-item";
+              sibDiv.style.textAlign = "right";
+              sibDiv.style.lineHeight = "1.6";
+
+              const nameSpan = document.createElement("div");
+              nameSpan.style.fontWeight = "600";
+              nameSpan.style.color = "#0c5160";
+              nameSpan.style.fontSize = "13px";
+              nameSpan.style.marginBottom = "2px";
+              nameSpan.textContent = sibling.name;
+
+              const detailsSpan = document.createElement("div");
+              detailsSpan.style.fontSize = "12px";
+              detailsSpan.style.color = "#2b5b62";
+              detailsSpan.style.opacity = "0.9";
+              detailsSpan.innerHTML = `<span style="font-weight: 500;">${sibling.marital}</span> • ${sibling.occupation}`;
+
+              sibDiv.appendChild(nameSpan);
+              sibDiv.appendChild(detailsSpan);
+
+              siblingsContainer.appendChild(sibDiv);
+            });
+          }
 
           setText("p_phone", document.getElementById("phone").value);
           setText("p_address", document.getElementById("address").value);
@@ -530,17 +1474,14 @@
             `;
             bigPhotos.appendChild(ph);
           } else {
-            photoFiles.forEach((file) => {
-              const reader = new FileReader();
-              reader.onload = function(ev){
-                const div = document.createElement("div");
-                div.className = "big";
-                const img = document.createElement("img");
-                img.src = ev.target.result;
-                div.appendChild(img);
-                bigPhotos.appendChild(div);
-              };
-              reader.readAsDataURL(file);
+            photoFiles.forEach((photoData) => {
+              const div = document.createElement("div");
+              div.className = "big";
+              const img = document.createElement("img");
+              // Use edited source if available, otherwise use original
+              img.src = photoData.editedSrc || photoData.originalSrc;
+              div.appendChild(img);
+              bigPhotos.appendChild(div);
             });
           }
 
@@ -571,12 +1512,20 @@
           console.log("Reset button clicked!");
           if(confirm("Clear form?")){
             document.querySelectorAll("input[type=text], input[type=date], input[type=tel], textarea").forEach(i=>i.value="");
+            document.querySelectorAll("select").forEach(s=>s.value="");
             photoFiles = [];
             photoInput.value = "";
+            siblings = [];
             renderPhotoThumbs();
+            updatePhotoCount();
+            renderSiblings();
             // clear preview fields
-            const ids = ["p_name","p_dob","p_pob","p_complexion","p_height","p_gotra","p_education","p_religion","p_caste","p_company","p_designation","p_package","p_father","p_fatherOcc","p_mother","p_motherOcc","p_siblings","p_phone","p_address"];
+            const ids = ["p_name","p_dob","p_pob","p_complexion","p_height","p_gotra","p_maternalGotra","p_education","p_religion","p_caste","p_company","p_designation","p_package","p_father","p_fatherOcc","p_mother","p_motherOcc","p_phone","p_address"];
             ids.forEach(id=>setText(id,"-"));
+            // Reset siblings display
+            const siblingsContainer = document.getElementById("p_siblings");
+            siblingsContainer.textContent = "-";
+            siblingsContainer.style.display = "block";
             bigPhotos.innerHTML = "";
           }
         });
@@ -585,11 +1534,14 @@
       // initialize small placeholders
       (function init(){
         setText("p_name","-");
+        setText("p_maternalGotra","-");
+        updatePhotoCount();
+        renderSiblings();
         bigPhotos.innerHTML = `
           <div class="big" style="display:flex; flex-direction:column; align-items:center; justify-content:center; color:#7da7a6; background:linear-gradient(135deg, #f5f9f9, #eaf5f4);">
             <div style="font-size:40px; margin-bottom:10px; opacity:0.5;">📷</div>
             <div style="font-size:14px; font-weight:500;">Upload photos to preview</div>
-            <div style="font-size:12px; opacity:0.7; margin-top:5px;">Up to 3 photos allowed</div>
+            <div style="font-size:12px; opacity:0.7; margin-top:5px;">Up to 5 photos allowed</div>
           </div>
         `;
       }());
